@@ -3,9 +3,8 @@ import axios from 'axios';
 
 export default function CovidTracker(){
     const [dateList, setDateList] = useState([]);
-    const [startDate, setStartDate] = useState('2020-08-09');
+    const [startDate, setStartDate] = useState('2020-09-04');
     const [endDate, setEndDate] = useState('2020-09-09');
-
 
 
     const submit = (startDate, endDate) => {
@@ -13,7 +12,6 @@ export default function CovidTracker(){
         console.log("endDate: "+endDate);
         axios.get(`https://covidtrackerapi.bsg.ox.ac.uk/api/v2/stringency/date-range/${startDate}/${endDate}`)
         .then((res) => { 
-            console.log(res.data.data)
             setDateList(res.data.data)})
     }
 
@@ -24,16 +22,25 @@ export default function CovidTracker(){
             <p>Pick ending date</p>
             <input type="date" min="2020-04-01" max={Date.now()} onChange={event => setEndDate(event.target.value)}></input>
             <br></br>
-            <span>{startDate}</span>
-            <br></br>
-            <span>{endDate}</span>
             <br></br>
             <button onClick={event => submit(startDate, endDate)}>SUBMIT</button>
+            <br></br>
+            <br></br>
 
-    {dateList.length !== 0 && Object.keys(dateList).map(i => {
+    {dateList.length !== 0 && Object.entries(dateList).map(([key,value]) => {
+        const { confirmed, date_value, deaths } = value.ISR;
         return (
-            <div>{i}</div>
+            <div>
+                <div>Date: {date_value}</div>
+                <div>Confirmed: {confirmed}</div>
+                <div>Deaths: {deaths}</div>
+                <br></br>
+            </div>
         )
+        
+        // Object.keys(date).map(country => {
+        //     console.log(country)
+        // })
     })}
         </div>
     )
