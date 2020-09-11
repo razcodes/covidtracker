@@ -10,6 +10,7 @@ export default function CovidTracker(){
     const [country, setCountry] = useState('');
     const [countryImage, setCountryImage] = useState('');
     const [countryName, setCountryName] = useState([]);
+    const [showContent, setShowContent] = useState(false);
 
         useEffect(() => {
             axios.get(`https://covidtrackerapi.bsg.ox.ac.uk/api/v2/stringency/date-range/${startDate}/${endDate}`)
@@ -34,10 +35,9 @@ export default function CovidTracker(){
         console.log("endDate: "+endDate);
         axios.get(`https://covidtrackerapi.bsg.ox.ac.uk/api/v2/stringency/date-range/${startDate}/${endDate}`)
         .then((res) => { 
-            console.log(res.data.data)
             setDateList(res.data.data)
             })
-
+        setShowContent(true);
     }
 
     return (
@@ -48,7 +48,7 @@ export default function CovidTracker(){
             <input type="date" min="2020-04-01" max={Date.now()} onChange={event => setEndDate(event.target.value)}></input>
 
             <p>Pick Country</p>
-            <select name="countries" id="countries" value={country} onChange={async(event) => {await setCountry(event.target.value); submit(startDate, endDate); }}>
+            <select name="countries" id="countries" value={country} onChange={(event) => {setCountry(event.target.value); setShowContent(false);}}>
                 {Object.keys(countries).map(key => (
                     <option value={key}>{key}</option>
                     ))}
@@ -59,14 +59,14 @@ export default function CovidTracker(){
             <button onClick={event => submit(startDate, endDate)}>SUBMIT</button>
             <br></br>
             <br></br>
-            <List dateList={dateList} country={country} countryImage={countryImage} countryName={countryName}/>
+            <List dateList={dateList} country={country} countryImage={countryImage} countryName={countryName} showContent={showContent}/>
         </div>
     )
 }
 
 export function List(props){
     return(
-        <div>
+        props.showContent && <div>
             <h3>{props.countryName}</h3>
             <img src={props.countryImage} width="200px"></img>
             {props.dateList.length !== 0 && Object.entries(props.dateList).map(([key,value]) => {
