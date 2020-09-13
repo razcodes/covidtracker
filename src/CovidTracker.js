@@ -11,7 +11,7 @@ export default function CovidTracker(){
     const [country, setCountry] = useState('ABW');
     const [countryImage, setCountryImage] = useState('');
     const [countryName, setCountryName] = useState([]);
-    const [showContent, setShowContent] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         axios.get(`https://covidtrackerapi.bsg.ox.ac.uk/api/v2/stringency/date-range/2020-09-04/2020-09-04`)
@@ -49,7 +49,7 @@ export default function CovidTracker(){
         .then((res) => { 
             setDateList(res.data.data)
         })
-        setShowContent(true);
+        setIsLoading(false);
     }
 
     return (
@@ -60,7 +60,7 @@ export default function CovidTracker(){
             <input type="date" min="2020-04-01" max={Date.now()} onChange={event => setEndDate(event.target.value)}></input>
 
             <p>Pick Country</p>
-            <select name="countries" id="countries" value={country} onChange={(event) => {setCountry(event.target.value); setShowContent(false);}}>
+            <select name="countries" id="countries" value={country} onChange={(event) => {setCountry(event.target.value); setIsLoading(true);}}>
                 {Object.keys(countries).map(key => (
                     <option value={key}>{key}</option>
                     ))}
@@ -71,14 +71,14 @@ export default function CovidTracker(){
             <button onClick={event => submit(startDate, endDate)}>SUBMIT</button>
             <br></br>
             <br></br>
-            <List dateList={dateList} country={country} countryImage={countryImage} countryName={countryName} showContent={showContent}/>
+            <List dateList={dateList} country={country} countryImage={countryImage} countryName={countryName} isLoading={isLoading}/>
         </div>
     )
 }
 
 export function List(props){
     return(
-        props.showContent && props.country && <div>
+        !props.isLoading && props.country && <div>
             <h3>{props.countryName}</h3>
             <img src={props.countryImage} width="200px"></img>
             {props.dateList.length !== 0 && Object.entries(props.dateList).map(([key,value]) => {
