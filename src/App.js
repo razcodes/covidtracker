@@ -1,6 +1,5 @@
 import React from 'react';
-import logo from './logo.svg';
-import CovidTracker from './CovidTracker'; 
+import CovidTracker from './components/CovidTracker';
 import './App.css';
 
 function App() {
