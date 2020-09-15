@@ -6,7 +6,7 @@ export default function CountryCard(props){
         props.countryImage && 
         <div>
             <h3>{props.countryName}</h3>
-            <img class="flag" src={props.countryImage} width="200px"></img>
+            <img className="flag" src={props.countryImage} alt={props.countryName+"'s flag"} width="200px"></img>
             <br></br>
             <br></br>
             <DateList dates={props.dateList} countryCode={props.A3CountryCode}/>

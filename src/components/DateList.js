@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 
 export default function DateList(props){
 
@@ -31,4 +31,5 @@ export default function DateList(props){
             <CountryData />
         </div>
     )
+    
 }
