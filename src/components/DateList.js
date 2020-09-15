@@ -2,6 +2,14 @@ import React, {useState, useEffect} from 'react';
 
 export default function DateList(props){
 
+    const formatDate = (input) => {
+        var datePart = input.match(/\d+/g),
+        year = datePart[0].substring(2), // get only two digits
+        month = datePart[1], day = datePart[2];
+      
+        return day+'/'+month+'/'+year;
+    }
+
     const CountryData = () => (
         Object.entries(props.dates).map(([key, value], i) => ( // key = dates, value = a3alpha codes
             <div>
@@ -10,7 +18,7 @@ export default function DateList(props){
                         <br></br>
                     </div>}
                 {value[props.countryCode] && <div>
-                        <div><b>{value[props.countryCode].date_value}</b></div>
+                        <div><b>{formatDate(value[props.countryCode].date_value)}</b></div>
                         <div>Confirmed: {value[props.countryCode].confirmed.toLocaleString()}</div>
                         <div>Deaths: {value[props.countryCode].deaths.toLocaleString()}</div><br></br>
                     </div>}
