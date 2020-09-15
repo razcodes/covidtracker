@@ -51,6 +51,7 @@ export default function CovidTracker(){
 
     return (
         <div>
+            <h1>Covid Tracker</h1>
             <p>Pick starting date</p>
             <input type="date" min="2020-04-01" max={Date.now()} onChange={event => setStartDate(event.target.value)}></input>
             <p>Pick ending date</p>
