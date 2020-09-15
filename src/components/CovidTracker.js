@@ -1,10 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Button from '@material-ui/core/Button';
+import Select from '@material-ui/core/Select';
 import CountryCard from './CountryCard';
+import 'react-date-range/dist/styles.css'; // main css file
+import 'react-date-range/dist/theme/default.css'; // theme css file
+import { DateRange } from 'react-date-range';
 
 export default function CovidTracker(){
     const [dateList, setDateList] = useState([]);
+    const [dateRange, setDateRange] = useState([{
+        startDate: new Date(),
+        endDate: null,
+        key: 'selection'
+      }]);
     const [startDate, setStartDate] = useState('2020-09-04');
     const [endDate, setEndDate] = useState('2020-09-09');
     const [A3CountryCodeList, setA3CountryCodeList] = useState([]);
@@ -47,20 +56,31 @@ export default function CovidTracker(){
         })
     }
 
+    const log = (x) => {
+        console.log("Start: ",x.startDate.toLocaleString())
+        console.log("End: ",x.endDate.toLocaleString())
+    }
+
     const options = A3CountryCodeList.map((value, i) => (<option value={value} key={i}>{value}</option>));
 
     return (
         <div>
-            <h1>Covid Tracker</h1>
-            <p>Pick starting date</p>
+            <h1 class="header">Covid Tracker</h1>
+            <DateRange
+                editableDateInputs={true}
+                onChange={item => {setDateRange([item.selection]); log(item.selection)}}
+                moveRangeOnFirstSelection={false}
+                ranges={dateRange}
+            />
+            {/* <p>Pick starting date</p>
             <input type="date" min="2020-04-01" max={Date.now()} onChange={event => setStartDate(event.target.value)}></input>
             <p>Pick ending date</p>
-            <input type="date" min="2020-04-01" max={Date.now()} onChange={event => setEndDate(event.target.value)}></input>
+            <input type="date" min="2020-04-01" max={Date.now()} onChange={event => setEndDate(event.target.value)}></input> */}
 
             <p>Pick Country</p>
-            <select onChange={(event) => {countryPicked(event.target.value)}}>
+            <Select onChange={(event) => {countryPicked(event.target.value)}}>
                 {options}
-            </select>
+            </Select>
 
             <br></br>
             <br></br>

@@ -3,7 +3,7 @@ import React, {useState, useEffect} from 'react';
 export default function DateList(props){
 
     const formatDate = (input) => {
-        var datePart = input.match(/\d+/g),
+        const datePart = input.match(/\d+/g),
         year = datePart[0].substring(2), // get only two digits
         month = datePart[1], day = datePart[2];
       
@@ -12,7 +12,7 @@ export default function DateList(props){
 
     const CountryData = () => (
         Object.entries(props.dates).map(([key, value], i) => ( // key = dates, value = a3alpha codes
-            <div>
+            <div key={i}>
                 {!value[props.countryCode] && <div>
                         <div><b>No data for this date</b></div>
                         <br></br>
