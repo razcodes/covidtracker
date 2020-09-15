@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Button from '@material-ui/core/Button';
-//import Select from '@material-ui/core/Select';
+import Select from '@material-ui/core/Select';
 import CountryCard from './CountryCard';
 import 'react-date-range/dist/styles.css'; // main css file
 import 'react-date-range/dist/theme/default.css'; // theme css file
@@ -52,28 +52,22 @@ export default function CovidTracker(){
         }
     }
 
-    const countryPicked = (A3CountryCode) => axios.get(`https://cors-anywhere.herokuapp.com/http://countryapi.gear.host/v1/Country/getCountries?pAlpha3Code=${A3CountryCode}`, config);
-        // .then((countryRes) => {
-        //     console.log("Name: ",countryRes.data.Response[0].Name)
-        //     console.log("Flag: ",countryRes.data.Response[0].Flag)
-        //     setA3CountryCode(A3CountryCode);
-        //     setCountryName(countryRes.data.Response[0].Name);
-        //     setCountryImage(countryRes.data.Response[0].Flag);
-        // })
-    
+    const countryPicked = (A3CountryCode) => {
+        axios.get(`https://cors-anywhere.herokuapp.com/http://countryapi.gear.host/v1/Country/getCountries?pAlpha3Code=${A3CountryCode}`, config)
+        .then((countryRes) => {
+            console.log("Name: ",countryRes.data.Response[0].Name)
+            console.log("Flag: ",countryRes.data.Response[0].Flag)
+            setA3CountryCode(A3CountryCode);
+            setCountryName(countryRes.data.Response[0].Name);
+            setCountryImage(countryRes.data.Response[0].Flag);
+        })
+    }
 
     const submit = () => {
         axios.get(`https://covidtrackerapi.bsg.ox.ac.uk/api/v2/stringency/date-range/${startDate}/${endDate}`)
         .then((res) => { 
             setDateList(res.data.data)
             console.log("DateList: ",res.data.data)
-        })
-        countryPicked(A3CountryCode).then((countryRes) => {
-            console.log("Name: ",countryRes.data.Response[0].Name)
-            console.log("Flag: ",countryRes.data.Response[0].Flag)
-            setA3CountryCode(A3CountryCode);
-            setCountryName(countryRes.data.Response[0].Name);
-            setCountryImage(countryRes.data.Response[0].Flag);
         })
     }
 
