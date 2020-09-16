@@ -16,6 +16,21 @@ body {
   font-size: 3em;
 }
 
+.datelist{
+  text-align: center;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.date {
+  margin: 10px;
+  width: 20vw;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;

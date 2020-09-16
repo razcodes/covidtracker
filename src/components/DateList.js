@@ -12,7 +12,7 @@ export default function DateList(props){
 
     const CountryData = () => (
         Object.entries(props.dates).map(([key, value], i) => ( // key = dates, value = a3alpha codes
-            <div key={i}>
+            <div key={i} className='date'>
                 {!value[props.countryCode] && <div>
                         <div><b>No data for this date</b></div>
                         <br></br>
@@ -27,7 +27,7 @@ export default function DateList(props){
     )
 
     return(
-        <div>
+        <div className='datelist'>
             <CountryData />
         </div>
     )

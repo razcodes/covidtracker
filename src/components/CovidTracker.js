@@ -1,21 +1,28 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import Button from '@material-ui/core/Button';
-import Select from '@material-ui/core/Select';
 import CountryCard from './CountryCard';
 import 'react-date-range/dist/styles.css'; // main css file
 import 'react-date-range/dist/theme/default.css'; // theme css file
 import { DateRange } from 'react-date-range';
 
-export default function CovidTracker(){
+import Button from '@material-ui/core/Button';
+import { makeStyles } from '@material-ui/core/styles';
+import InputLabel from '@material-ui/core/InputLabel';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import NativeSelect from '@material-ui/core/NativeSelect';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
+export default function CovidTracker(){
     const [dateList, setDateList] = useState([]);
     const [startDate, setStartDate] = useState('2020-09-04');
     const [endDate, setEndDate] = useState('2020-09-09');
     const [A3CountryCodeList, setA3CountryCodeList] = useState([]);
-    const [A3CountryCode, setA3CountryCode] = useState('ITA');
+    const [A3CountryCode, setA3CountryCode] = useState('');
     const [countryImage, setCountryImage] = useState('');
     const [countryName, setCountryName] = useState([]);
+    const [isLoading, setIsLoading] = useState();
     const [dateRange, setDateRange] = useState([{
         startDate: new Date(),
         endDate: null,
@@ -52,14 +59,17 @@ export default function CovidTracker(){
         }
     }
 
-    const countryPicked = (A3CountryCode) => {
+    const countryPicked = (event) => {
+        let A3CountryCode = event.target.value;
+        setA3CountryCode(A3CountryCode);
+        setIsLoading(true);
         axios.get(`https://cors-anywhere.herokuapp.com/http://countryapi.gear.host/v1/Country/getCountries?pAlpha3Code=${A3CountryCode}`, config)
         .then((countryRes) => {
             console.log("Name: ",countryRes.data.Response[0].Name)
             console.log("Flag: ",countryRes.data.Response[0].Flag)
-            setA3CountryCode(A3CountryCode);
             setCountryName(countryRes.data.Response[0].Name);
             setCountryImage(countryRes.data.Response[0].Flag);
+            setIsLoading(false);
         })
     }
 
@@ -80,16 +90,45 @@ export default function CovidTracker(){
         console.log("endDate: ",x.endDate);
     }
 
-    const selectionOptions = A3CountryCodeList.map((value, i) => (<option value={value} key={i}>{value}</option>));
+    const selectionOptions = A3CountryCodeList.map((value, i) => (<option key={i} value={value}>{value}</option>));
+    
+    const useStyles = makeStyles((theme) => ({
+        formControl: {
+            margin: theme.spacing(1),
+            minWidth: 120,
+        },
+        selectEmpty: {
+            marginTop: theme.spacing(2),
+        },
+    }));
+    const classes = useStyles();
 
+    const change = (event) => {
+        console.log(event.target.value)
+    }
+    
     return (
         <div>
             <h1>Covid Tracker</h1>
 
             <p>Pick Country</p>
-            <select onChange={(event) => {countryPicked(event.target.value)}}>
+            <FormControl variant="outlined" className={classes.formControl}>
+                <InputLabel htmlFor="outlined-age-native-simple">Country</InputLabel>
+                <Select
+                native
+                value={A3CountryCode}
+                onChange={countryPicked}
+                label="Country"
+                inputProps={{
+                    name: 'Country',
+                    id: 'outlined-age-native-simple',
+                }}
+                >
+                <option aria-label="None" value="" />
                 {selectionOptions}
-            </select>
+                </Select>
+            </FormControl>
+
             <br></br>
             <br></br>
 
@@ -99,18 +138,15 @@ export default function CovidTracker(){
                 moveRangeOnFirstSelection={false}
                 ranges={dateRange}
             />
-            
-            {/* <p>Pick starting date</p>
-            <input type="date" min="2020-04-01" max={Date.now()} onChange={event => setStartDate(item.selection.startDate)}></input>
-            <p>Pick ending date</p>
-            <input type="date" min="2020-04-01" max={Date.now()} onChange={event => setEndDate(item.selection.endDate)}></input> */}
 
             <br></br>
             <br></br>
             <Button variant="contained" color="primary" onClick={event => submit()}>SUBMIT</Button>
             <br></br>
             <br></br>
-            <CountryCard dateList={dateList} A3CountryCode={A3CountryCode} countryImage={countryImage} countryName={countryName}/>
+            {isLoading && <CircularProgress />}
+            {!isLoading && <CountryCard dateList={dateList} A3CountryCode={A3CountryCode} countryImage={countryImage} countryName={countryName}/>}
+
         </div>
     )
 }
