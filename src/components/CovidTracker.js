@@ -105,15 +105,11 @@ export default function CovidTracker(){
         },
     }));
     const classes = useStyles();
-
-    const change = (event) => {
-        console.log(event.target.value)
-    }
     
     return (
         <div>
             <h1 className='header'>Covid Tracker</h1>
-            <p className="no-margin">Select a range of dates</p>
+            <p className="no-margin subheader">Select a range of dates</p>
             <DateRange
                 editableDateInputs={true}
                 onChange={item => {setDateRange([item.selection]); dateWasSet(item.selection)}}
@@ -121,7 +117,7 @@ export default function CovidTracker(){
                 ranges={dateRange}
             />
             <div>
-                <p className="no-margin">Select a Country</p>
+                <p className="no-margin subheader">Select a Country</p>
                 <FormControl variant="outlined" className={classes.formControl}>
                     <InputLabel htmlFor="outlined-age-native-simple">Country</InputLabel>
 

@@ -16,6 +16,10 @@ body {
   margin: 0;
 }
 
+.subheader {
+  font-size: 1em;
+}
+
 .no-margin{
   margin: 0;
 }
@@ -38,4 +42,14 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+@media screen and (max-width: 600px) {
+  .header {
+    font-size: 8vw;
+  }
+  
+  .subheader {
+    font-size: 4vw;
+  }
 }
