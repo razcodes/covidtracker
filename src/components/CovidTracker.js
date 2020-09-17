@@ -139,7 +139,7 @@ export default function CovidTracker(){
             </div>
             <Button disabled={isLoading || A3CountryCode=='' || startDate==undefined || endDate==undefined} style={{margin:0}} variant="contained" color="primary" onClick={event => submit()}>SUBMIT</Button>
             {!isLoading && <CountryCard dateList={dateList} A3CountryCode={A3CountryCode} countryImage={countryImage} countryName={countryName}/>}
-            {isLoading && <div style={{'margin-top': '5px'}}><CircularProgress /></div>}
+            {isLoading && <div style={{'marginTop': '5px'}}><CircularProgress /></div>}
         </div>
     )
 }

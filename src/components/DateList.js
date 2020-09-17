@@ -12,15 +12,14 @@ export default function DateList(props){
 
     const CountryData = () => (
         Object.entries(props.dates).map(([key, value], i) => ( // key = dates, value = a3alpha codes
-            <div key={i} className='date'>
-                {!value[props.countryCode] && <div>
+            <div key={i} className='date-box'>
+                {!value[props.countryCode] && <div className="date-text">
                         <div><b>No data for this date</b></div>
-                        <br></br>
                     </div>}
-                {value[props.countryCode] && <div>
+                {value[props.countryCode] && <div className="date-text">
                         <div><b>{formatDate(value[props.countryCode].date_value)}</b></div>
                         <div>Confirmed: {value[props.countryCode].confirmed.toLocaleString()}</div>
-                        <div>Deaths: {value[props.countryCode].deaths.toLocaleString()}</div><br></br>
+                        <div>Deaths: {value[props.countryCode].deaths.toLocaleString()}</div>
                     </div>}
             </div>
         ))

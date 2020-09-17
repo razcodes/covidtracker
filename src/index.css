@@ -20,6 +20,14 @@ body {
   font-size: 1em;
 }
 
+.date-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 5px;
+  font-size: 0.7em;
+}
+
 .no-margin{
   margin: 0;
 }
@@ -32,9 +40,8 @@ body {
   justify-content: center;
 }
 
-.date {
-  margin: 10px;
-  width: 20vw;
+.date-box {
+  margin: 5px;
   border: 1px solid #ccc;
   border-radius: 20px;
 }
