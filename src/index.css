@@ -1,5 +1,4 @@
 body {
-  margin: 20px;
   font-family: -apple-system, BlinkMacSystemFont, 'Roboto', 'Segoe UI', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
@@ -13,7 +12,12 @@ body {
 }
 
 .header {
-  font-size: 3em;
+  font-family: 'Roboto Condensed';
+  margin: 0;
+}
+
+.no-margin{
+  margin: 0;
 }
 
 .datelist{
