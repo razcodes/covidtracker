@@ -3,7 +3,7 @@ import axios from 'axios';
 import CountryCard from './CountryCard';
 import 'react-date-range/dist/styles.css'; // main css file
 import 'react-date-range/dist/theme/default.css'; // theme css file
-import { DateRange } from 'react-date-range';
+import DateBox from './DateBox.js';
 
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
@@ -109,13 +109,8 @@ export default function CovidTracker(){
     return (
         <div>
             <h1 className='header'>Covid Tracker</h1>
-            <p className="no-margin subheader">Select a range of dates</p>
-            <DateRange
-                editableDateInputs={true}
-                onChange={item => {setDateRange([item.selection]); dateWasSet(item.selection)}}
-                moveRangeOnFirstSelection={false}
-                ranges={dateRange}
-            />
+            <DateBox setDateRange={setDateRange} dateWasSet={dateWasSet} dateRange={dateRange} />
+
             <div>
                 <p className="no-margin subheader">Select a Country</p>
                 <FormControl variant="outlined" className={classes.formControl}>
@@ -137,7 +132,7 @@ export default function CovidTracker(){
 
                 </FormControl>
             </div>
-            <Button disabled={isLoading || A3CountryCode=='' || startDate==undefined || endDate==undefined} style={{margin:0}} variant="contained" color="primary" onClick={event => submit()}>SUBMIT</Button>
+            <Button disabled={isLoading || A3CountryCode=='' || startDate==undefined || endDate==undefined} className='no-margin' variant="contained" color="primary" onClick={event => submit()}>SUBMIT</Button>
             {!isLoading && <CountryCard dateList={dateList} A3CountryCode={A3CountryCode} countryImage={countryImage} countryName={countryName}/>}
             {isLoading && <div style={{'marginTop': '5px'}}><CircularProgress /></div>}
         </div>
