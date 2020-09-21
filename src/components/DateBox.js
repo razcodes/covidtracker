@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { DateRange } from 'react-date-range';
 
 export default function DateBox(props) {

@@ -56,7 +56,7 @@ export default function CovidTracker(){
     }
 
     const countryPicked = (event) => {
-        if(event.target.value!=''){
+        if(event.target.value!==''){
             setCountryName('');
             setCountryImage('');
             let A3CountryCode = event.target.value;
@@ -97,7 +97,7 @@ export default function CovidTracker(){
                 A3CountryCodeList={A3CountryCodeList}
                 countryPicked={countryPicked}/>
 
-            <Button disabled={isLoading || A3CountryCode=='' || startDate==undefined || endDate==undefined} 
+            <Button disabled={isLoading || A3CountryCode==='' || startDate===undefined || endDate===undefined} 
                 className='no-margin' 
                 variant="contained" 
                 color="primary" 
