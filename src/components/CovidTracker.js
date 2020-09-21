@@ -89,7 +89,7 @@ export default function CovidTracker(){
     }
     
     return (
-        <div className='container'>
+        <div>
             <h1 className='header'>Covid Tracker</h1>
             <DateBox setDateRange={setDateRange} dateWasSet={dateWasSet} dateRange={dateRange} />
 
