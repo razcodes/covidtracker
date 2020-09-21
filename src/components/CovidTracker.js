@@ -56,24 +56,24 @@ export default function CovidTracker(){
     }
 
     const countryPicked = (event) => {
-        setCountryName('');
-        setCountryImage('');
-        let A3CountryCode = event.target.value;
-        setA3CountryCode(A3CountryCode);
-        setIsLoading(true);
-        axios.get(`https://cors-anywhere.herokuapp.com/https://restcountries.eu/rest/v2/alpha/${A3CountryCode}`, config)
-        .then((countryRes) => {
-            setCountryReponse(countryRes);
-            setIsLoading(false);
-        })
+        if(event.target.value!=''){
+            setCountryName('');
+            setCountryImage('');
+            let A3CountryCode = event.target.value;
+            setA3CountryCode(A3CountryCode);
+            setIsLoading(true);
+            axios.get(`https://cors-anywhere.herokuapp.com/https://restcountries.eu/rest/v2/alpha/${A3CountryCode}`, config)
+            .then((countryRes) => {
+                setCountryReponse(countryRes);
+                setIsLoading(false);
+            })
+        }
     }
 
     const submit = () => {
         setIsLoading(true);
         axios.get(`https://covidtrackerapi.bsg.ox.ac.uk/api/v2/stringency/date-range/${formatDate(startDate)}/${formatDate(endDate)}`)
         .then((res) => { 
-            console.log("DateList: ",res.data.data);
-            console.log("CountryResponse: ",countryResponse.data);
             setCountryName(countryResponse.data.name);
             setCountryImage(countryResponse.data.flag);
             setDateList(res.data.data);
@@ -83,9 +83,7 @@ export default function CovidTracker(){
 
     const dateWasSet = (x) => {
         setStartDate(formatDate(x.startDate));
-        console.log("startDate: ",x.startDate);
         setEndDate(formatDate(x.endDate));
-        console.log("endDate: ",x.endDate);
     }
     
     return (
