@@ -89,7 +89,7 @@ export default function CovidTracker(){
     }
     
     return (
-        <div>
+        <div className='container'>
             <h1 className='header'>Covid Tracker</h1>
             <DateBox setDateRange={setDateRange} dateWasSet={dateWasSet} dateRange={dateRange} />
 
@@ -97,9 +97,7 @@ export default function CovidTracker(){
             <SelectCountry 
                 A3CountryCode={A3CountryCode}
                 A3CountryCodeList={A3CountryCodeList}
-                countryPicked={countryPicked}
-
-            />
+                countryPicked={countryPicked}/>
 
             <Button disabled={isLoading || A3CountryCode=='' || startDate==undefined || endDate==undefined} 
                 className='no-margin' 
