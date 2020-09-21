@@ -16,9 +16,9 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 
 export default function CovidTracker(){
     const [countryResponse, setCountryReponse] = useState();
+    const [startDate, setStartDate] = useState(new Date());
+    const [endDate, setEndDate] = useState(new Date());
     const [dateList, setDateList] = useState([]);
-    const [startDate, setStartDate] = useState();
-    const [endDate, setEndDate] = useState();
     const [A3CountryCodeList, setA3CountryCodeList] = useState([]);
     const [A3CountryCode, setA3CountryCode] = useState('');
     const [countryImage, setCountryImage] = useState('');
@@ -28,15 +28,15 @@ export default function CovidTracker(){
         startDate: new Date(),
         endDate: new Date(),
         key: 'selection'
-        }]);
-        
+    }]);
+    
     useEffect(() => {
         axios.get(`https://covidtrackerapi.bsg.ox.ac.uk/api/v2/stringency/date-range/2020-09-04/2020-09-04`)
         .then((res) => {
             setA3CountryCodeList(res.data.countries)
         })
     },[])
-
+    
     const formatDate = (date) => {
         let d = new Date(date),
             month = '' + (d.getMonth() + 1),
@@ -66,7 +66,7 @@ export default function CovidTracker(){
         let A3CountryCode = event.target.value;
         setA3CountryCode(A3CountryCode);
         setIsLoading(true);
-        axios.get(`https://cors-anywhere.herokuapp.com/http://countryapi.gear.host/v1/Country/getCountries?pAlpha3Code=${A3CountryCode}`, config)
+        axios.get(`https://cors-anywhere.herokuapp.com/https://restcountries.eu/rest/v2/alpha/${A3CountryCode}`, config)
         .then((countryRes) => {
             setCountryReponse(countryRes);
             setIsLoading(false);
@@ -75,12 +75,12 @@ export default function CovidTracker(){
 
     const submit = () => {
         setIsLoading(true);
-        axios.get(`https://covidtrackerapi.bsg.ox.ac.uk/api/v2/stringency/date-range/${startDate}/${endDate}`)
+        axios.get(`https://covidtrackerapi.bsg.ox.ac.uk/api/v2/stringency/date-range/${formatDate(startDate)}/${formatDate(endDate)}`)
         .then((res) => { 
             console.log("DateList: ",res.data.data);
-            console.log("CountryResponse: ",countryResponse);
-            setCountryName(countryResponse.data.Response[0].Name);
-            setCountryImage(countryResponse.data.Response[0].Flag);
+            console.log("CountryResponse: ",countryResponse.data);
+            setCountryName(countryResponse.data.name);
+            setCountryImage(countryResponse.data.flag);
             setDateList(res.data.data);
             setIsLoading(false);
         })

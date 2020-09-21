@@ -17,9 +17,9 @@ export default function DateList(props){
                         <div><b>No data for this date</b></div>
                     </div>}
                 {value[props.countryCode] && <div className="date-text">
-                        <div><b>{formatDate(value[props.countryCode].date_value)}</b></div>
-                        <div>Confirmed: {value[props.countryCode].confirmed.toLocaleString()}</div>
-                        <div>Deaths: {value[props.countryCode].deaths.toLocaleString()}</div>
+                        {value[props.countryCode].date_value && <div><b>{formatDate(value[props.countryCode].date_value)}</b></div>}
+                        {value[props.countryCode].confirmed && <div>Confirmed: {value[props.countryCode].confirmed.toLocaleString()}</div>}
+                        {value[props.countryCode].deaths && <div>Deaths: {value[props.countryCode].deaths.toLocaleString()}</div>}
                     </div>}
             </div>
         ))

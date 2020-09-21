@@ -3,7 +3,6 @@ import { DateRange } from 'react-date-range';
 
 export default function DateBox(props) {
 
-
     return (
         <div>
             <p className="no-margin subheader">Select a range of dates</p>
