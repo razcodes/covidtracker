@@ -4,14 +4,9 @@ import CountryCard from './CountryCard';
 import 'react-date-range/dist/styles.css'; // main css file
 import 'react-date-range/dist/theme/default.css'; // theme css file
 import DateBox from './DateBox.js';
+import SelectCountry from './SelectCountry.js';
 
 import Button from '@material-ui/core/Button';
-import { makeStyles } from '@material-ui/core/styles';
-import InputLabel from '@material-ui/core/InputLabel';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
-import NativeSelect from '@material-ui/core/NativeSelect';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 export default function CovidTracker(){
@@ -92,49 +87,41 @@ export default function CovidTracker(){
         setEndDate(formatDate(x.endDate));
         console.log("endDate: ",x.endDate);
     }
-
-    const selectionOptions = A3CountryCodeList.map((value, i) => (<option key={i} value={value}>{value}</option>));
-    
-    const useStyles = makeStyles((theme) => ({
-        formControl: {
-            margin: theme.spacing(1),
-            minWidth: 120,
-        },
-        selectEmpty: {
-            marginTop: theme.spacing(2),
-        },
-    }));
-    const classes = useStyles();
     
     return (
         <div>
             <h1 className='header'>Covid Tracker</h1>
             <DateBox setDateRange={setDateRange} dateWasSet={dateWasSet} dateRange={dateRange} />
 
-            <div>
-                <p className="no-margin subheader">Select a Country</p>
-                <FormControl variant="outlined" className={classes.formControl}>
-                    <InputLabel htmlFor="outlined-age-native-simple">Country</InputLabel>
+            <p className="no-margin subheader">Select a Country</p>
+            <SelectCountry 
+                A3CountryCode={A3CountryCode}
+                A3CountryCodeList={A3CountryCodeList}
+                countryPicked={countryPicked}
 
-                    <Select
-                    native
-                    value={A3CountryCode}
-                    onChange={countryPicked}
-                    label="Country"
-                    inputProps={{
-                        name: 'Country',
-                        id: 'outlined-age-native-simple',
-                    }}
-                    >
-                    <option aria-label="None" value="" />
-                    {selectionOptions}
-                    </Select>
+            />
 
-                </FormControl>
-            </div>
-            <Button disabled={isLoading || A3CountryCode=='' || startDate==undefined || endDate==undefined} className='no-margin' variant="contained" color="primary" onClick={event => submit()}>SUBMIT</Button>
-            {!isLoading && <CountryCard dateList={dateList} A3CountryCode={A3CountryCode} countryImage={countryImage} countryName={countryName}/>}
-            {isLoading && <div style={{'marginTop': '5px'}}><CircularProgress /></div>}
+            <Button disabled={isLoading || A3CountryCode=='' || startDate==undefined || endDate==undefined} 
+                className='no-margin' 
+                variant="contained" 
+                color="primary" 
+                onClick={event => submit()}>
+                    SUBMIT
+            </Button>
+
+            {!isLoading && 
+                <CountryCard 
+                    dateList={dateList} 
+                    A3CountryCode={A3CountryCode} 
+                    countryImage={countryImage} 
+                    countryName={countryName}
+                />}
+
+            {isLoading && 
+                <div 
+                    style={{'marginTop': '5px'}}>
+                        <CircularProgress />
+                </div>}
         </div>
     )
 }
