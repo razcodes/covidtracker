@@ -1,10 +1,8 @@
 import React, { useEffect,useState } from 'react';
 import axios from 'axios';
 import InputLabel from '@material-ui/core/InputLabel';
-//import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-//import NativeSelect from '@material-ui/core/NativeSelect';
 import { makeStyles } from '@material-ui/core/styles';
 
 
@@ -23,8 +21,9 @@ export default function SelectCountry(props) {
         })
     })
     
-    //const selectionOptions = props.A3CountryCodeList.map((value, i) => (<option key={i} value={value}>{value}</option>));
-    const selectionOptions = Object.entries(countryNamesList).map(([key, value], i) => (<option key={i} value={value.A3}>{value.name}</option>));
+    const selectionOptions = 
+        Object.entries(countryNamesList)
+            .map(([key, value], i) => (<option key={i} value={value.A3} className='country-option'>{value.name}</option>));
 
     const useStyles = makeStyles((theme) => ({
         formControl: {
