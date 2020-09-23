@@ -91,7 +91,7 @@ export default function CovidTracker(){
             <h1 className='header no-margin'>Covid Tracker</h1>
             <DateBox setDateRange={setDateRange} dateWasSet={dateWasSet} dateRange={dateRange} />
 
-            <p className="subheader no-margin"></p>
+            <p className="subheader margin-5">Select a Country</p>
             <SelectCountry 
                 A3CountryCode={A3CountryCode}
                 A3CountryCodeList={A3CountryCodeList}
