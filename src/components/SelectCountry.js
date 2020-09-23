@@ -21,12 +21,12 @@ export default function SelectCountry(props) {
     
     const selectionOptions = 
         Object.entries(countryNamesList)
-            .map(([key, value], i) => (<option key={i} value={value.A3} className='country-option'>{value.name}</option>));
+            .map(([key, value], i) => (<option key={i} value={value.A3}>{value.name}</option>));
 
     return (
         <div>
             <FormControl variant="outlined">
-                <InputLabel htmlFor="outlined-age-native-simple">Country</InputLabel>
+                <InputLabel htmlFor="outlined-age-native-simple">Select a Country</InputLabel>
 
                 <Select
                 native
