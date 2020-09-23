@@ -88,17 +88,16 @@ export default function CovidTracker(){
     
     return (
         <div>
-            <h1 className='header'>Covid Tracker</h1>
+            <h1 className='header no-margin'>Covid Tracker</h1>
             <DateBox setDateRange={setDateRange} dateWasSet={dateWasSet} dateRange={dateRange} />
 
-            <p className="no-margin subheader">Select a Country</p>
+            <p className="subheader no-margin">Select a Country</p>
             <SelectCountry 
                 A3CountryCode={A3CountryCode}
                 A3CountryCodeList={A3CountryCodeList}
                 countryPicked={countryPicked}/>
 
-            <Button disabled={isLoading || A3CountryCode==='' || startDate===undefined || endDate===undefined} 
-                className='no-margin' 
+            <Button className="button" disabled={isLoading || A3CountryCode==='' || startDate===undefined || endDate===undefined} 
                 variant="contained" 
                 color="primary" 
                 onClick={event => submit()}>

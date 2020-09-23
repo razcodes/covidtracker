@@ -3,8 +3,6 @@ import axios from 'axios';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-import { makeStyles } from '@material-ui/core/styles';
-
 
 export default function SelectCountry(props) {
     const [countryNamesList, setCountryNamesList] = useState('');
@@ -25,21 +23,9 @@ export default function SelectCountry(props) {
         Object.entries(countryNamesList)
             .map(([key, value], i) => (<option key={i} value={value.A3} className='country-option'>{value.name}</option>));
 
-    const useStyles = makeStyles((theme) => ({
-        formControl: {
-            margin: theme.spacing(1),
-            minWidth: 120,
-        },
-        selectEmpty: {
-            marginTop: theme.spacing(2),
-        },
-    }));
-
-    const classes = useStyles();
-
     return (
         <div>
-            <FormControl variant="outlined" className={classes.formControl}>
+            <FormControl variant="outlined">
                 <InputLabel htmlFor="outlined-age-native-simple">Country</InputLabel>
 
                 <Select
