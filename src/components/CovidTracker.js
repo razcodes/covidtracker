@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import CountryCard from './CountryCard';
 import 'react-date-range/dist/styles.css'; // main css file
@@ -24,6 +24,7 @@ export default function CovidTracker(){
         endDate: new Date(),
         key: 'selection'
     }]);
+    const countryCardRef = useRef();
     
     useEffect(() => {
         axios.get(`https://covidtrackerapi.bsg.ox.ac.uk/api/v2/stringency/date-range/2020-09-04/2020-09-04`)
@@ -78,6 +79,8 @@ export default function CovidTracker(){
             setCountryImage(countryResponse.data.flag);
             setDateList(res.data.data);
             setIsLoading(false);
+            console.log(countryCardRef.current)
+            countryCardRef.current.scrollIntoView({behavior: "smooth"});
         })
     }
 
@@ -105,12 +108,14 @@ export default function CovidTracker(){
             </Button>
 
             {!isLoading && 
-                <CountryCard 
-                    dateList={dateList} 
-                    A3CountryCode={A3CountryCode} 
-                    countryImage={countryImage} 
-                    countryName={countryName}
-                />}
+                <div ref={countryCardRef}>
+                    <CountryCard 
+                        dateList={dateList} 
+                        A3CountryCode={A3CountryCode} 
+                        countryImage={countryImage} 
+                        countryName={countryName}
+                    />
+                </div>}
 
             {isLoading && 
                 <div 
