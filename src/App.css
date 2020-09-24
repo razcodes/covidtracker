@@ -14,7 +14,7 @@
 }
 
 .flag {
-  border-radius: 30px;
+  border-radius: 10px;
 }
 
 @media (prefers-reduced-motion: no-preference) {

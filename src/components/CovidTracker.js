@@ -17,8 +17,8 @@ export default function CovidTracker(){
     const [countryName, setCountryName] = useState([]);
     const [isLoading, setIsLoading] = useState();
     const [dateRange, setDateRange] = useState([{
-        startDate: new Date(),
-        endDate: new Date(),
+        startDate: startDate,
+        endDate: endDate,
         key: 'selection'
     }]);
     const countryCardRef = useRef();
@@ -29,6 +29,15 @@ export default function CovidTracker(){
             setA3CountryCodeList(res.data.countries)
         })
     },[])
+
+    useEffect(() => {
+        axios.get(`https://covidtrackerapi.bsg.ox.ac.uk/api/v2/stringency/date-range/${formatDate(startDate)}/${formatDate(endDate)}`)
+            .then((res) => { 
+                setDateList(res.data.data);
+                setIsLoading(false);
+                countryCardRef.current.scrollIntoView({behavior: "smooth"});
+            })
+    }, [dateRange])
     
     const formatDate = (date) => {
         let d = new Date(date),
@@ -82,10 +91,16 @@ export default function CovidTracker(){
     
     return (
         <div>
-            <h1 className='header no-margin'>Covid Tracker</h1>
+            <h1 className='header no-margin'>
+                Covid Tracker
+            </h1>
+
             <DateBox setDateRange={setDateRange} dateWasSet={dateWasSet} dateRange={dateRange} />
 
-            <p className="subheader margin-5">Select a Country</p>
+            <p className="subheader margin-5">
+                Select a Country
+            </p>
+
             <SelectCountry 
                 A3CountryCode={A3CountryCode}
                 A3CountryCodeList={A3CountryCodeList}
