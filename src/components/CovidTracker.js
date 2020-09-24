@@ -5,12 +5,9 @@ import 'react-date-range/dist/styles.css'; // main css file
 import 'react-date-range/dist/theme/default.css'; // theme css file
 import DateBox from './DateBox.js';
 import SelectCountry from './SelectCountry.js';
-
-import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 export default function CovidTracker(){
-    const [countryResponse, setCountryReponse] = useState();
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState(new Date());
     const [dateList, setDateList] = useState([]);
@@ -65,23 +62,17 @@ export default function CovidTracker(){
             setIsLoading(true);
             axios.get(`https://cors-anywhere.herokuapp.com/https://restcountries.eu/rest/v2/alpha/${A3CountryCode}`, config)
             .then((countryRes) => {
-                setCountryReponse(countryRes);
+                setCountryName(countryRes.data.name);
+                setCountryImage(countryRes.data.flag);
                 setIsLoading(false);
             })
+            axios.get(`https://covidtrackerapi.bsg.ox.ac.uk/api/v2/stringency/date-range/${formatDate(startDate)}/${formatDate(endDate)}`)
+            .then((res) => { 
+                setDateList(res.data.data);
+                setIsLoading(false);
+                countryCardRef.current.scrollIntoView({behavior: "smooth"});
+            })
         }
-    }
-
-    const submit = () => {
-        setIsLoading(true);
-        axios.get(`https://covidtrackerapi.bsg.ox.ac.uk/api/v2/stringency/date-range/${formatDate(startDate)}/${formatDate(endDate)}`)
-        .then((res) => { 
-            setCountryName(countryResponse.data.name);
-            setCountryImage(countryResponse.data.flag);
-            setDateList(res.data.data);
-            setIsLoading(false);
-            console.log(countryCardRef.current)
-            countryCardRef.current.scrollIntoView({behavior: "smooth"});
-        })
     }
 
     const dateWasSet = (x) => {
@@ -99,13 +90,6 @@ export default function CovidTracker(){
                 A3CountryCode={A3CountryCode}
                 A3CountryCodeList={A3CountryCodeList}
                 countryPicked={countryPicked}/>
-
-            <Button className="button" disabled={isLoading || A3CountryCode==='' || startDate===undefined || endDate===undefined} 
-                variant="contained" 
-                color="primary" 
-                onClick={event => submit()}>
-                    SUBMIT
-            </Button>
 
             {!isLoading && 
                 <div ref={countryCardRef}>
