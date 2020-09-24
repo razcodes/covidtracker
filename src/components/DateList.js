@@ -1,6 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 export default function DateList(props){
+
+    useEffect(() => {
+        calcDailyConfirmed();
+    },[])
 
     const formatDate = (input) => {
         const datePart = input.match(/\d+/g),
@@ -8,6 +12,28 @@ export default function DateList(props){
         month = datePart[1], day = datePart[2];
       
         return day+'/'+month+'/'+year;
+    }
+
+    const calcDailyConfirmed = () => {
+        const currentCountry = {
+            code: props.countryCode,
+            days: Object.entries(props.dates).map(([key, value], i) => {
+                return value[props.countryCode]
+            })
+        }
+        const confirmed = currentCountry.days.map((a)=>{
+            return {
+                confirmed: a !== undefined ? a.confirmed : 0
+            }
+        })
+        const newConfirmed = confirmed.map((num, i) => {
+            return {
+                confirmed: num.confirmed,
+                daily: confirmed[i+1] !== undefined ? confirmed[i+1].confirmed-num.confirmed : 0
+            }
+        })
+        newConfirmed.pop()
+        console.log(newConfirmed)
     }
 
     const CountryData = () => (
