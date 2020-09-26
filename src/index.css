@@ -55,8 +55,9 @@ body {
 .date-box {
   display: flex;
   justify-content: center;
-  width: 100px;
-  height: 100px;
+  /* width: 100px;
+  height: 100px; */
+  padding: 5px;
   margin: 5px;
   border: 1px solid #ccc;
   border-radius: 20px;
