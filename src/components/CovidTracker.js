@@ -23,20 +23,17 @@ export default function CovidTracker(){
     }]);
     const countryCardRef = useRef();
     
+    
     useEffect(() => {
         axios.get(`https://covidtrackerapi.bsg.ox.ac.uk/api/v2/stringency/date-range/2020-09-04/2020-09-04`)
         .then((res) => {
             setA3CountryCodeList(res.data.countries)
         })
     },[])
-
+    
     useEffect(() => {
-        axios.get(`https://covidtrackerapi.bsg.ox.ac.uk/api/v2/stringency/date-range/${formatDate(startDate)}/${formatDate(endDate)}`)
-            .then((res) => { 
-                setDateList(res.data.data);
-                setIsLoading(false);
-                countryCardRef.current.scrollIntoView({behavior: "smooth"});
-            })
+        getCountryDataAccordingToDates();
+        
     }, [dateRange])
     
     const formatDate = (date) => {
@@ -52,7 +49,7 @@ export default function CovidTracker(){
     
         return [year, month, day].join('-');
     }
-
+    
     const config = {
         headers: {
             'Content-Type': 'application/json',
@@ -75,13 +72,17 @@ export default function CovidTracker(){
                 setCountryImage(countryRes.data.flag);
                 setIsLoading(false);
             })
-            axios.get(`https://covidtrackerapi.bsg.ox.ac.uk/api/v2/stringency/date-range/${formatDate(startDate)}/${formatDate(endDate)}`)
-            .then((res) => { 
-                setDateList(res.data.data);
-                setIsLoading(false);
-                countryCardRef.current.scrollIntoView({behavior: "smooth"});
-            })
+            getCountryDataAccordingToDates();
         }
+    }
+
+    const getCountryDataAccordingToDates = () => {
+        axios.get(`https://covidtrackerapi.bsg.ox.ac.uk/api/v2/stringency/date-range/${formatDate(startDate)}/${formatDate(endDate)}`)
+        .then((res) => { 
+            setDateList(res.data.data);
+            setIsLoading(false);
+            countryCardRef.current.scrollIntoView({behavior: "smooth"});
+        })
     }
 
     const dateWasSet = (x) => {
@@ -104,7 +105,9 @@ export default function CovidTracker(){
             <SelectCountry 
                 A3CountryCode={A3CountryCode}
                 A3CountryCodeList={A3CountryCodeList}
-                countryPicked={countryPicked}/>
+                countryPicked={countryPicked}
+                dateWasSet={dateWasSet}
+                />
 
             {!isLoading && 
                 <div ref={countryCardRef}>

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 
 export default function DateList(props){
     const [countryData, setCountryData] = useState();
-    const [newInfected, setNewInfected] = useState();
 
     useEffect(() => {
         createCountryDataObject();
@@ -23,6 +22,7 @@ export default function DateList(props){
         })
         calcDailyConfirmed(data);
     }
+    
 
     const calcDailyConfirmed = (data) => {        
 
@@ -38,7 +38,7 @@ export default function DateList(props){
             return;
 
         })
-        console.log("confirmedArray: ", confirmedArray)
+        //console.log("confirmedArray: ", confirmedArray)
 
         // Creating an array based on the confirmed one with daily infected
         const newArr = [null];
@@ -51,7 +51,7 @@ export default function DateList(props){
                 newArr[i]=null;
             }
         })
-        console.log("newArr: ", newArr)
+        //console.log("newArr: ", newArr)
 
         const newConfirmed = data.map((day, i) => {
             if(day !== undefined && data[i+1] !== undefined){
@@ -95,11 +95,9 @@ export default function DateList(props){
         return day+'/'+month+'/'+year;
     }
     
-        return(
-            <div>
-                <div className='datelist'>
-                    {countryData && <CountryDataHTML />}
-                </div>
-            </div>
+    return(
+        <div className='datelist'>
+            {countryData && <CountryDataHTML />}
+        </div>
     )   
 }

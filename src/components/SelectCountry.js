@@ -31,7 +31,7 @@ export default function SelectCountry(props) {
                 <Select
                 native
                 value={props.A3CountryCode}
-                onChange={props.countryPicked}
+                onChange={(event)=>{props.countryPicked(event)}}
                 label="Country"
                 inputProps={{
                     name: 'Country',

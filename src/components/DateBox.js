@@ -14,7 +14,7 @@ export default function DateBox(props) {
                 onChange={item => {props.setDateRange([item.selection]); props.dateWasSet(item.selection)}}
                 moveRangeOnFirstSelection={false}
                 ranges={props.dateRange}
-            />
+            /> 
             
         </div>
     )
