@@ -70,8 +70,8 @@ export default function CovidTracker(){
                 setCountryName(countryRes.data.name);
                 setCountryImage(countryRes.data.flag);
                 setIsLoading(false);
+                getCountryDataAccordingToDates();
             })
-            getCountryDataAccordingToDates();
         }
     }
 
@@ -80,7 +80,7 @@ export default function CovidTracker(){
         .then((res) => { 
             setDateList(res.data.data);
             setIsLoading(false);
-            setTimeout(()=>{countryCardRef.current.scrollIntoView({behavior: "smooth"})},1000);
+            countryCardRef.current.scrollIntoView({behavior: "smooth"})
         })
     }
 
