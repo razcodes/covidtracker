@@ -33,7 +33,6 @@ export default function CovidTracker(){
     
     useEffect(() => {
         getCountryDataAccordingToDates();
-        
     }, [dateRange])
     
     const formatDate = (date) => {
@@ -81,7 +80,7 @@ export default function CovidTracker(){
         .then((res) => { 
             setDateList(res.data.data);
             setIsLoading(false);
-            countryCardRef.current.scrollIntoView({behavior: "smooth"});
+            setTimeout(()=>{countryCardRef.current.scrollIntoView({behavior: "smooth"})},1000);
         })
     }
 

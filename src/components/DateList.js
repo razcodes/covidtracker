@@ -5,7 +5,7 @@ export default function DateList(props){
 
     useEffect(() => {
         createCountryDataObject();
-    },[])
+    },[props.dates])
 
     const createCountryDataObject = () => {
         const data = Object.entries(props.dates).map((a, i)=>{
