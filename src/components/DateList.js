@@ -54,14 +54,25 @@ export default function DateList(props){
         console.log("newArr: ", newArr)
 
         const newConfirmed = data.map((day, i) => {
-            if(day !== undefined && data[i+1] !== undefined){
+            if(i===data.length-1 && day){
                 return ({
                     id: day.id,
                     date_value: day.date_value,
                     data: {
                         confirmed: day.data.confirmed,
                         deaths: day.data.deaths,
-                        daily: newArr[i-1]
+                        daily: null
+                    }
+                })
+            }
+            if(day !== undefined){
+                return ({
+                    id: day.id,
+                    date_value: day.date_value,
+                    data: {
+                        confirmed: day.data.confirmed,
+                        deaths: day.data.deaths,
+                        daily: newArr[i-1]>0 ? newArr[i-1]:null
                     }
                 })
             }
