@@ -45,7 +45,7 @@ export default function DateList(props){
             return;
 
         })
-        console.log("confirmedArray: ", confirmedArray)
+        //console.log("confirmedArray: ", confirmedArray)
 
         // Creating an array based on the confirmed one with daily infected
         const newArr = [null];
@@ -64,7 +64,7 @@ export default function DateList(props){
                 }
             }
         })
-        console.log("newArr: ", newArr)
+        //console.log("newArr: ", newArr)
 
         const newConfirmed = data.map((day, i) => {
             if(i===data.length-1 && day){
@@ -91,7 +91,7 @@ export default function DateList(props){
             }
         })
         setCountryData(newConfirmed);
-        console.log("New confirmed: ", newConfirmed)
+        //console.log("New confirmed: ", newConfirmed)
     }
 
     const CountryDataHTML = () => (
