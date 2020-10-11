@@ -33,17 +33,25 @@ export default function DateList(props){
                 confirmedArray.push(day.data.confirmed)
                 return;
             }
+            if(i === data.length-1){
+                confirmedArray.push(day.data.confirmed)
+                return;
+            }
 
             confirmedArray.push(null)
             return;
 
         })
-        console.log("confirmedArray: ", confirmedArray)
+        //console.log("confirmedArray: ", confirmedArray)
 
         // Creating an array based on the confirmed one with daily infected
         const newArr = [null];
         confirmedArray.map((num, i)=>{
-            if(num!==null){
+            if(i === confirmedArray.length-1){
+                let daily = confirmedArray[i]-confirmedArray[i-1];
+                newArr[i]=daily;
+            }
+            else if(num!==null){
                 let daily = confirmedArray[i+1]-num;
                 newArr[i]=daily;
             }
@@ -51,7 +59,7 @@ export default function DateList(props){
                 newArr[i]=null;
             }
         })
-        console.log("newArr: ", newArr)
+        //console.log("newArr: ", newArr)
 
         const newConfirmed = data.map((day, i) => {
             if(i===data.length-1 && day){
@@ -61,7 +69,7 @@ export default function DateList(props){
                     data: {
                         confirmed: day.data.confirmed,
                         deaths: day.data.deaths,
-                        daily: null
+                        daily: newArr[i]
                     }
                 })
             }
@@ -77,8 +85,8 @@ export default function DateList(props){
                 })
             }
         })
-        console.log("newConfirmed: ",newConfirmed)
         setCountryData(newConfirmed);
+        console.log("New confirmed: ", newConfirmed)
     }
 
     const CountryDataHTML = () => (
