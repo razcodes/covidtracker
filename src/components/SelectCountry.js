@@ -17,7 +17,7 @@ export default function SelectCountry(props) {
                 }
             }))
         })
-    })
+    },[])
     
     const selectionOptions = 
         Object.entries(countryNamesList)
