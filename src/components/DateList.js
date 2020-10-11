@@ -29,13 +29,15 @@ export default function DateList(props){
         // Creating an array made of confirmed infected
         const confirmedArray = [];
         data.map((day, i) => {
-            if(day !== undefined && data[i+1] !== undefined){
-                confirmedArray.push(day.data.confirmed)
-                return;
-            }
-            if(i === data.length-1){
-                confirmedArray.push(day.data.confirmed)
-                return;
+            if(day !== undefined){
+                if(i === data.length-1){
+                    confirmedArray.push(day.data.confirmed)
+                    return;
+                }
+                else if(data[i+1] !== undefined){
+                    confirmedArray.push(day.data.confirmed)
+                    return;
+                }
             }
 
             confirmedArray.push(null)
@@ -86,7 +88,7 @@ export default function DateList(props){
             }
         })
         setCountryData(newConfirmed);
-        console.log("New confirmed: ", newConfirmed)
+        //console.log("New confirmed: ", newConfirmed)
     }
 
     const CountryDataHTML = () => (
