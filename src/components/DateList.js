@@ -8,19 +8,21 @@ export default function DateList(props){
     },[props.dates])
 
     const createCountryDataObject = () => {
-        const data = Object.entries(props.dates).map((a, i)=>{
-            if(a[1][props.countryCode]!==undefined){
-                return ({
-                    id: i,
-                    date_value: a[0],
-                    data: {
-                        confirmed: a[1][props.countryCode].confirmed,
-                        deaths: a[1][props.countryCode].deaths
-                    }
-                })
-            }
-        })
-        calcDailyConfirmed(data);
+        if(props.dates){
+            const data = Object.entries(props.dates).map((a, i)=>{
+                if(a[1][props.countryCode]!==undefined){
+                    return ({
+                        id: i,
+                        date_value: a[0],
+                        data: {
+                            confirmed: a[1][props.countryCode].confirmed,
+                            deaths: a[1][props.countryCode].deaths
+                        }
+                    })
+                }
+            })
+            calcDailyConfirmed(data);
+        }
     }
     
 
