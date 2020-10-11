@@ -30,7 +30,7 @@ export default function DateList(props){
         const confirmedArray = [];
         data.map((day, i) => {
             if(day !== undefined){
-                if(i === data.length-1){
+                if(i === data.length-1 || (data[i+1] == undefined && i !== data.length-1)){
                     confirmedArray.push(day.data.confirmed)
                     return;
                 }
@@ -39,29 +39,30 @@ export default function DateList(props){
                     return;
                 }
             }
-
             confirmedArray.push(null)
             return;
 
         })
-        //console.log("confirmedArray: ", confirmedArray)
+        console.log("confirmedArray: ", confirmedArray)
 
         // Creating an array based on the confirmed one with daily infected
         const newArr = [null];
         confirmedArray.map((num, i)=>{
-            if(i === confirmedArray.length-1){
-                let daily = confirmedArray[i]-confirmedArray[i-1];
-                newArr[i]=daily;
-            }
-            else if(num!==null){
-                let daily = confirmedArray[i+1]-num;
-                newArr[i]=daily;
-            }
-            else{
-                newArr[i]=null;
+            if(confirmedArray.length > 1){
+                if(i === confirmedArray.length-1){
+                    let daily = confirmedArray[i]-confirmedArray[i-1];
+                    newArr[i]=daily;
+                }
+                else if(num!==null){
+                    let daily = confirmedArray[i+1]-num;
+                    newArr[i]=daily;
+                }
+                else{
+                    newArr[i]=null;
+                }
             }
         })
-        //console.log("newArr: ", newArr)
+        console.log("newArr: ", newArr)
 
         const newConfirmed = data.map((day, i) => {
             if(i===data.length-1 && day){
@@ -88,7 +89,7 @@ export default function DateList(props){
             }
         })
         setCountryData(newConfirmed);
-        //console.log("New confirmed: ", newConfirmed)
+        console.log("New confirmed: ", newConfirmed)
     }
 
     const CountryDataHTML = () => (
