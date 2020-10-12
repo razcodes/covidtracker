@@ -104,7 +104,7 @@ export default function DateList(props){
                     {value && <div className="date-text">
                             {value.date_value && <div><b>{formatDate(value.date_value)}</b></div>}
                             {value.data.confirmed && <div>Confirmed: {value.data.confirmed.toLocaleString()}</div>}
-                            {value.data.deaths && <div>Deaths: {value.data.deaths.toLocaleString()}</div>}
+                            {value.data.deaths >=0 && <div>Deaths: {value.data.deaths.toLocaleString()}</div>}
                             {value.data.daily && <div style={{ 'color': 'red' }}>Daily infected: {value.data.daily.toLocaleString()}</div>}
                         </div>}
                 </div>
