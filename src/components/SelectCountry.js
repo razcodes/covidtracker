@@ -36,12 +36,13 @@ export default function SelectCountry(props) {
             <Autocomplete
             id="combo-box-demo"
             onChange={(event, value) => {
-                props.countryPicked(value.A3)
+                if(value !== null)
+                    props.countryPicked(value.A3)
             }}
             options={countryNamesList}
             getOptionLabel={(option) => option.name}
             style={autocompleteStyle}
-            renderInput={(params) => <TextField {...params} label="Combo box" variant="outlined" />}
+            renderInput={(params) => <TextField {...params} label="Country" variant="outlined" />}
             />
         </div>
     )
