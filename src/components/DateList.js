@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 export default function DateList(props){
     const [countryData, setCountryData] = useState();
@@ -97,14 +98,14 @@ export default function DateList(props){
     const CountryDataHTML = () => (
         Object.entries(countryData).map(([key, value], i)=>(
             <div className='date-box' key={i}>
-                <div>{!value && 
+                <div>{!value &&
                     <div className="date-text">
                         <div><b>No data for this date</b></div>
                     </div>}
                     {value && <div className="date-text">
                             {value.date_value && <div><b>{formatDate(value.date_value)}</b></div>}
                             {value.data.confirmed && <div>Confirmed: {value.data.confirmed.toLocaleString()}</div>}
-                            {value.data.deaths >=0 && <div>Deaths: {value.data.deaths.toLocaleString()}</div>}
+                            {value.data.deaths !== null && <div>Deaths: {value.data.deaths.toLocaleString()}</div>}
                             {value.data.daily && <div style={{ 'color': 'red' }}>Daily infected: {value.data.daily.toLocaleString()}</div>}
                         </div>}
                 </div>
@@ -122,7 +123,15 @@ export default function DateList(props){
     
     return(
         <div className='datelist'>
-            {countryData && <CountryDataHTML />}
+            
+            {!props.isLoadingDates && 
+                countryData && <CountryDataHTML />}
+
+            {props.isLoadingDates && 
+            <div 
+                style={{'marginTop': '5px'}}>
+                    <CircularProgress />
+            </div>}
         </div>
     )   
 }

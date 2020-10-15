@@ -4,6 +4,9 @@ import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 
+import TextField from '@material-ui/core/TextField';
+import Autocomplete from '@material-ui/lab/Autocomplete';
+
 export default function SelectCountry(props) {
     const [countryNamesList, setCountryNamesList] = useState('');
 
@@ -23,28 +26,23 @@ export default function SelectCountry(props) {
         Object.entries(countryNamesList)
             .map(([key, value], i) => (<option key={i} value={value.A3}>{value.name}</option>));
 
+    const autocompleteStyle = {
+        width: "300px",
+        margin: "auto"
+    }
+
     return (
         <div>
-             <FormControl variant="outlined">
-                <InputLabel htmlFor="outlined-age-native-simple">Country</InputLabel>
-
-                <Select
-                native
-                value={props.A3CountryCode}
-                onChange={(event)=>{props.countryPicked(event)}}
-                label="Country"
-                inputProps={{
-                    name: 'Country',
-                    id: 'outlined-age-native-simple',
-                }}
-                >
-                <option aria-label="None" value="" 
-                />
-                    {selectionOptions}
-                </Select>
-
-            </FormControl>
+            <Autocomplete
+            id="combo-box-demo"
+            onChange={(event, value) => {
+                props.countryPicked(value.A3)
+            }}
+            options={countryNamesList}
+            getOptionLabel={(option) => option.name}
+            style={autocompleteStyle}
+            renderInput={(params) => <TextField {...params} label="Combo box" variant="outlined" />}
+            />
         </div>
     )
 }
-

@@ -8,6 +8,7 @@ import SelectCountry from './SelectCountry.js';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 export default function CovidTracker(){
+    const [isLoadingDates, setIsLoadingDates] = useState(false);
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState(new Date());
     const [dateList, setDateList] = useState([]);
@@ -53,16 +54,16 @@ export default function CovidTracker(){
         headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
-            'Access-Control-Allow-Origin': 'http://localhost:3000',
+            'Access-Control-Allow-Origin': 'localhost:3000',
             'Access-Control-Allow-Credentials': 'true'
         }
     }
 
-    const countryPicked = (event) => {
-        if(event.target.value!==''){
+    const countryPicked = (value) => {
+        if(value!==''){
             setCountryName('');
             setCountryImage('');
-            let A3CountryCode = event.target.value;
+            let A3CountryCode = value;
             setA3CountryCode(A3CountryCode);
             setIsLoading(true);
             axios.get(`https://cors-anywhere.herokuapp.com/https://restcountries.eu/rest/v2/alpha/${A3CountryCode}`, config)
@@ -74,12 +75,13 @@ export default function CovidTracker(){
             })
         }
     }
-
+    
     const getCountryDataAccordingToDates = () => {
+        setIsLoadingDates(true)
         axios.get(`https://covidtrackerapi.bsg.ox.ac.uk/api/v2/stringency/date-range/${formatDate(startDate)}/${formatDate(endDate)}`)
         .then((res) => { 
             setDateList(res.data.data);
-            setIsLoading(false);
+            setIsLoadingDates(false);
             countryCardRef.current.scrollIntoView({behavior: "smooth"})
         })
     }
@@ -99,7 +101,7 @@ export default function CovidTracker(){
 
             <p className="subheader margin-5">
                 Select a Country
-            </p>
+            </p><br />
 
             <SelectCountry 
                 A3CountryCode={A3CountryCode}
@@ -115,6 +117,7 @@ export default function CovidTracker(){
                         A3CountryCode={A3CountryCode} 
                         countryImage={countryImage} 
                         countryName={countryName}
+                        isLoadingDates={isLoadingDates}
                     />
                 </div>}
 

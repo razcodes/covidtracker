@@ -9,7 +9,7 @@ export default function CountryCard(props){
             <img className="flag" src={props.countryImage} alt={props.countryName+"'s flag"} width="200px"></img>
             <br></br>
             <br></br>
-            <DateList dates={props.dateList} countryCode={props.A3CountryCode}/>
+            <DateList dates={props.dateList} countryCode={props.A3CountryCode} isLoadingDates={props.isLoadingDates}/>
         </div>
     )
 }
