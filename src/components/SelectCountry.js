@@ -8,7 +8,7 @@ import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 
 export default function SelectCountry(props) {
-    const [countryNamesList, setCountryNamesList] = useState('');
+    const [countryNamesList, setCountryNamesList] = useState([]);
 
     useEffect(() => {
         axios.get('https://restcountries.eu/rest/v2/all')
