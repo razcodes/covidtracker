@@ -51,10 +51,12 @@ export default function CountrySummary(props){
     const SummaryHTML = () => (
         Object.entries(summaryData).map(([key, value], i) => (
             <div key={i}>
-                <div>{key}:{value}</div>
+                {value > 0 && <div>{key}:{value}</div>}
             </div>
         ))
     )
+    
+    if(!props.open) return null;
 
     return(
         <div>

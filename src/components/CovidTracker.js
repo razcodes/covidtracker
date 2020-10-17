@@ -9,6 +9,7 @@ import CountrySummary from './CountrySummary.js';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 export default function CovidTracker(){
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const [isLoadingDates, setIsLoadingDates] = useState(false);
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState(new Date());
@@ -113,11 +114,17 @@ export default function CovidTracker(){
 
             {!isLoading && 
                 <div ref={countryCardRef}>
+                    {A3CountryCode &&                    
                     <div>
-                        <CountrySummary 
+                        <button onClick={() => {isModalOpen ? setIsModalOpen(false) : setIsModalOpen(true)}}>
+                            Toggle Summmary
+                        </button>
+
+                        <CountrySummary
+                            open={isModalOpen} 
                             countryName={countryName}
                         />
-                    </div>
+                    </div>}
 
                     <div>
                         <CountryCard 
