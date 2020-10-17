@@ -5,35 +5,33 @@ export default function DateList(props){
     const [countryData, setCountryData] = useState();
 
     useEffect(() => {
+        const createCountryDataObject = () => {
+            if(props.dates){
+                const data = Object.entries(props.dates).map((a, i)=>{
+                    if(a[1][props.countryCode]!==undefined){
+                        return ({
+                            id: i,
+                            date_value: a[0],
+                            data: {
+                                confirmed: a[1][props.countryCode].confirmed,
+                                deaths: a[1][props.countryCode].deaths
+                            }
+                        })
+                    }
+                })
+                calcDailyConfirmed(data);
+            }
+        }
         createCountryDataObject();
     },[props.dates])
-
-    const createCountryDataObject = () => {
-        if(props.dates){
-            const data = Object.entries(props.dates).map((a, i)=>{
-                if(a[1][props.countryCode]!==undefined){
-                    return ({
-                        id: i,
-                        date_value: a[0],
-                        data: {
-                            confirmed: a[1][props.countryCode].confirmed,
-                            deaths: a[1][props.countryCode].deaths
-                        }
-                    })
-                }
-            })
-            calcDailyConfirmed(data);
-        }
-    }
-    
 
     const calcDailyConfirmed = (data) => {        
 
         // Creating an array made of confirmed infected
         const confirmedArray = [];
-        data.map((day, i) => {
+        data.forEach((day, i) => {
             if(day !== undefined){
-                if(i === data.length-1 || (data[i+1] == undefined && i !== data.length-1)){
+                if(i === data.length-1 || (data[i+1] === undefined && i !== data.length-1)){
                     confirmedArray.push(day.data.confirmed)
                     return;
                 }
@@ -50,7 +48,7 @@ export default function DateList(props){
 
         // Creating an array based on the confirmed one with daily infected
         const newArr = [null];
-        confirmedArray.map((num, i)=>{
+        confirmedArray.forEach((num, i)=>{
             if(confirmedArray.length > 1){
                 if(i === confirmedArray.length-1){
                     let daily = confirmedArray[i]-confirmedArray[i-1];
@@ -123,7 +121,6 @@ export default function DateList(props){
     
     return(
         <div className='datelist'>
-            
             {!props.isLoadingDates && 
                 countryData && <CountryDataHTML />}
 
@@ -135,3 +132,4 @@ export default function DateList(props){
         </div>
     )   
 }
+

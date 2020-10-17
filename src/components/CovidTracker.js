@@ -5,6 +5,7 @@ import 'react-date-range/dist/styles.css'; // main css file
 import 'react-date-range/dist/theme/default.css'; // theme css file
 import DateBox from './DateBox.js';
 import SelectCountry from './SelectCountry.js';
+import CountrySummary from './CountrySummary.js';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 export default function CovidTracker(){
@@ -108,17 +109,25 @@ export default function CovidTracker(){
                 A3CountryCodeList={A3CountryCodeList}
                 countryPicked={countryPicked}
                 dateWasSet={dateWasSet}
-                />
+                /><br />
 
             {!isLoading && 
                 <div ref={countryCardRef}>
-                    <CountryCard 
-                        dateList={dateList} 
-                        A3CountryCode={A3CountryCode} 
-                        countryImage={countryImage} 
-                        countryName={countryName}
-                        isLoadingDates={isLoadingDates}
-                    />
+                    <div>
+                        <CountrySummary 
+                            countryName={countryName}
+                        />
+                    </div>
+
+                    <div>
+                        <CountryCard 
+                            dateList={dateList} 
+                            A3CountryCode={A3CountryCode} 
+                            countryImage={countryImage} 
+                            countryName={countryName}
+                            isLoadingDates={isLoadingDates}
+                        />
+                    </div>
                 </div>}
 
             {isLoading && 
